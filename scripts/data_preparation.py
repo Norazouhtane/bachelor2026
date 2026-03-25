@@ -7,9 +7,9 @@ from variable_cleaner import clean_ess_data
 def load_data(
         data_path,
         codebook_path,
-        country='DE',
-        test_size=0.3,
-        random_state=42
+        country,
+        random_state,
+        test_size=0.3
 ):
     """
     MAKE DOCSTRING

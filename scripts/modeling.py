@@ -6,27 +6,30 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 
 
-def choose_model(model_name):
+def choose_model(model_name, random_state):
     if model_name == "lgbm":
-        return lgb.LGBMClassifier(random_state=42)
+        return lgb.LGBMClassifier(random_state=random_state)
     elif model_name == "logistic":
-        return LogisticRegression(max_iter=1000, random_state=42)
+        return LogisticRegression(random_state=random_state)
     elif model_name == "hist":
-        return HistGradientBoostingClassifier()
+        return HistGradientBoostingClassifier(random_state=random_state)
+    elif model_name == "rf":
+        return RandomForestClassifier(random_state=random_state)
     
 
-def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search):
+def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
 
-    model = choose_model(model_name)
+    model = choose_model(model_name, random_state)
     weights = df.loc[X_train.index, 'pspwght']
 
     if grid_search:
-        model = GridSearchCV(model, parameters[model_name], cv=5, scoring="roc_auc", n_jobs=-1)
+        model = GridSearchCV(model, parameters[model_name], cv=5, scoring="f1_weighted", n_jobs=-1)
         model.fit(X_train, y_train, sample_weight=weights)
         print(f"  Best params: {model.best_params_}")
+        print(f"  Best CV score: {model.best_score_:.4f}")
         model = model.best_estimator_  
     else:
         model.fit(X_train, y_train, sample_weight=weights)
@@ -54,11 +57,21 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
 
 parameters = {
     "lgbm": {
-        "n_estimators": [100, 300],
-        "max_depth":    [3, 5, 7],
-        "learning_rate": [0.01, 0.1],
+        "max_bin": [70, 80, 90],
+        "num_leaves":    [30, 45, 60],
+        "learning_rate": [0.65, 0.7, 0.75],
+    },
+    "hist": {
+        "learning_rate": [0.1, 0.15, 0.20],
+        "max_depth":    [3, 5, 10],
+        "min_samples_leaf": [1, 2, 3],
     },
     "logistic": {
         "C": [0.01, 0.1, 1, 10],
-    }
+    },
+     "rf": {
+        "max_features": ["sqrt", "log2"],
+        "max_depth":    [3, 5, 10],
+        "min_samples_leaf": [1, 2, 3],
+    },
 }
