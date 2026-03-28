@@ -18,7 +18,7 @@ def load_data(
     df = pd.read_csv(data_path)
 
     # Filter the dataframe
-    df = df[df['cntry'] == country].copy()
+    df = df[df['cntry'].isin(country)].copy()
     df = df[df['ctzcntr'] == 1] # eligible national election voters
     df['vote'] = df['vote'].replace([3,7,8,9], np.nan) # drop non-response values for target
     df = df[df['vote'].notna()]
@@ -34,7 +34,7 @@ def load_data(
     df['vote'] = df['vote'].map({1.0: 1, 2.0: 0})
 
     # Prepare features
-    exclude_from_predictors = ['vote', 'pspwght']  
+    exclude_from_predictors = ['vote', 'anweight']  
     predictor_cols = [col for col in df.columns if col not in exclude_from_predictors]
     X = df[predictor_cols].copy()
     y = df['vote'].copy()
@@ -173,7 +173,7 @@ admin_cols = [
     'recon', 'inwds', 'ainws', 'ainwe', 'binwe', 'cinwe', 'dinwe', 'einwe',
     'finwe', 'hinwe', 'iinwe', 'kinwe', 'rinwe', 'inwde', 'jinws', 'jinwe',
     'inwtm', 'mode', 'domain', 'prob', 'stratum', 'psu', 'name', 'essround', 
-    'edition', 'proddate', 'idno', 'dweight', 'pweight', 'anweight', 'cntry'
+    'edition', 'proddate', 'idno', 'dweight', 'pweight', 'cntry', 'pspwght'
 ]
 
 # Combine all columns to drop

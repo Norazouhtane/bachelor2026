@@ -4,14 +4,13 @@ from shap_analysis import run_shap
 import os
 
 # Configs
-country      = "DE"
+country      = ["HR", "BG", "SK", "SI", "PL"]
 model_name   = "hist"      
 data_path    = "../data/raw/ESS11.csv"
 codebook     = "../codebooks/ESS11e04_1 codebook.html"
-shap         = False
+shap         = True
 grid_search  = False
 random_state = 42
-
 
 output_dir = f"../output/{country}_{model_name}"
 os.makedirs(output_dir, exist_ok=True)

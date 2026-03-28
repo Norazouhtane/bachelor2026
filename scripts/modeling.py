@@ -11,22 +11,22 @@ from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassif
 
 def choose_model(model_name, random_state):
     if model_name == "lgbm":
-        return lgb.LGBMClassifier(random_state=random_state)
+        return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
     elif model_name == "logistic":
         return LogisticRegression(random_state=random_state)
     elif model_name == "hist":
-        return HistGradientBoostingClassifier(random_state=random_state)
+        return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
     elif model_name == "rf":
-        return RandomForestClassifier(random_state=random_state)
+        return RandomForestClassifier(max_depth=50, max_features=None, min_samples_leaf=1, n_estimators=10, random_state=random_state)
     
 
 def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
 
     model = choose_model(model_name, random_state)
-    weights = df.loc[X_train.index, 'pspwght']
+    weights = df.loc[X_train.index, 'anweight']
 
     if grid_search:
-        model = GridSearchCV(model, parameters[model_name], cv=5, scoring="f1_weighted", n_jobs=-1)
+        model = GridSearchCV(model, parameters[model_name], cv=5, scoring="f1_macro", n_jobs=-1)
         model.fit(X_train, y_train, sample_weight=weights)
         print(f"  Best params: {model.best_params_}")
         print(f"  Best CV score: {model.best_score_:.4f}")
@@ -57,21 +57,24 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
 
 parameters = {
     "lgbm": {
-        "max_bin": [70, 80, 90],
-        "num_leaves":    [30, 45, 60],
-        "learning_rate": [0.65, 0.7, 0.75],
+        "max_depth": [-1, 10, 15, 20],
+        "num_leaves":    [15, 30, 45],
+        "learning_rate": [0.7, 0.75, 0.8],
+        "n_estimators": [100, 150, 200]
     },
     "hist": {
-        "learning_rate": [0.1, 0.15, 0.20],
-        "max_depth":    [3, 5, 10],
-        "min_samples_leaf": [1, 2, 3],
+        "learning_rate": [0.25, 0.3, 0.4],
+        "max_depth":    [2, 3, 5],
+        "min_samples_leaf": [1, 2],
+        "max_iter": [100, 200, 300]
     },
     "logistic": {
         "C": [0.01, 0.1, 1, 10],
     },
      "rf": {
-        "max_features": ["sqrt", "log2"],
-        "max_depth":    [3, 5, 10],
+        "max_features": ["sqrt", "log2", None],
+        "max_depth":    [15, 20, 50, 100],
         "min_samples_leaf": [1, 2, 3],
+        "n_estimators": [5, 10, 100, 200]
     },
 }
