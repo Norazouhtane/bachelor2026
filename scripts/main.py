@@ -4,7 +4,7 @@ from shap_analysis import run_shap
 import os
 
 # Configs
-country      = ["HR", "BG", "SK", "SI", "PL"]
+country      = ["SE"]
 model_name   = "hist"      
 data_path    = "../data/raw/ESS11.csv"
 codebook     = "../codebooks/ESS11e04_1 codebook.html"

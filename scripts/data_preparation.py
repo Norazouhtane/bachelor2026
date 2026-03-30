@@ -19,7 +19,8 @@ def load_data(
 
     # Filter the dataframe
     df = df[df['cntry'].isin(country)].copy()
-    df = df[df['ctzcntr'] == 1] # eligible national election voters
+    df = df[df['ctzcntr'] == 1] # eligible national election voters (citizenship)
+    df = df[df['yrbrn']>= 18] # eligible national election voters (age)
     df['vote'] = df['vote'].replace([3,7,8,9], np.nan) # drop non-response values for target
     df = df[df['vote'].notna()]
 
@@ -65,7 +66,7 @@ party_voted_cols = [
     'prtvteil', 'prtvteit', 'prtvtblv', 'prtvclt1', 'prtvclt2', 'prtvclt3',
     'prtvtbme', 'prtvtinl', 'prtvtcno', 'prtvtfpl', 'prtvtept', 'prtvtbrs',
     'prtvtesk', 'prtvtgsi', 'prtvtges', 'prtvtese', 'prtvthch', 'prtvtdua',
-    'prtvtdgb', 'prtvgde1', 'prtvgde2', 'prtvtdat',
+    'prtvtdgb', 'prtvgde1', 'prtvgde2', 'prtvtdat', 'prtvtdse'
 ]
 
 # Party feel closer to variables 
