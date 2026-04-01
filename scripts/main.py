@@ -4,11 +4,11 @@ from shap_analysis import run_shap
 import os
 
 # Configs
-country      = ["SE"]
+country      = ["DE"]
 model_name   = "hist"      
 data_path    = "../data/raw/ESS11.csv"
 codebook     = "../codebooks/ESS11e04_1 codebook.html"
-shap         = True
+shap         = False
 grid_search  = False
 random_state = 42
 

@@ -9,7 +9,8 @@ def load_data(
         codebook_path,
         country,
         random_state,
-        test_size=0.3
+        test_size=0.3,
+        nonresponse_dict=None
 ):
     """
     MAKE DOCSTRING
@@ -29,7 +30,7 @@ def load_data(
     df = df.drop(columns=cols_to_drop_existing)
 
     # Switch non-response values to NaN
-    df = clean_ess_data(df, codebook_path)
+    df = clean_ess_data(df, codebook_path, nonresponse_dict)
 
     # Map vote values to 0 and 1
     df['vote'] = df['vote'].map({1.0: 1, 2.0: 0})

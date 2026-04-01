@@ -10,6 +10,10 @@ from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassif
 
 
 def choose_model(model_name, random_state):
+    """
+    MAKE DOCSTRING
+    """
+
     if model_name == "lgbm":
         return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
     elif model_name == "logistic":
@@ -21,6 +25,9 @@ def choose_model(model_name, random_state):
     
 
 def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
+    """
+    MAKE DOCSTRING
+    """
 
     model = choose_model(model_name, random_state)
     weights = df.loc[X_train.index, 'anweight']
@@ -53,6 +60,16 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
     with open(os.path.join(output_dir, "model.pkl"), "wb") as f:
         pickle.dump(model, f)
 
+    return model
+
+def fit_model(X_train, y_train, df, model_name, random_state):
+    """
+    MAKE DOCSTRING
+    """
+    model = choose_model(model_name, random_state)
+    weights = df.loc[X_train.index, 'anweight']
+    model.fit(X_train, y_train, sample_weight=weights)
+    
     return model
 
 parameters = {

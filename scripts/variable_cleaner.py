@@ -49,7 +49,7 @@ def parse_ess_codebook(html_file):
     return nonresponse_dict
 
 
-def clean_ess_data(df, codebook):
+def clean_ess_data(df, codebook, nonresponse_dict=None):
     """
     Replace all non-response codes with NaN.
     
@@ -59,9 +59,11 @@ def clean_ess_data(df, codebook):
     
     Returns:
         df_clean (DataFrame): Cleaned DataFrame without non-response values
+    UPDATE DOCSTRING
     """
-    nonresponse_dict = parse_ess_codebook(codebook)
-    print(f"{len(nonresponse_dict)} variables had non-response values\n")
+    if nonresponse_dict is None:
+        nonresponse_dict = parse_ess_codebook(codebook)
+        print(f"{len(nonresponse_dict)} variables had non-response values\n")
     
     df_clean = df.copy()
     
