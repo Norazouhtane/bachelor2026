@@ -70,6 +70,5 @@ def clean_ess_data(df, codebook, nonresponse_dict=None):
     for col, code_val in nonresponse_dict.items():
         if col in df_clean.columns:
             df_clean[col] = df_clean[col].replace(code_val, np.nan)
-    print(f"Cleaning complete")
     
     return df_clean

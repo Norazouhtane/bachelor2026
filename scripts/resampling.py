@@ -1,4 +1,5 @@
 import os
+import random
 import numpy as np
 import pandas as pd
 from data_preparation import load_data
@@ -49,3 +50,47 @@ mean_shap_diff = new_eu_mean - old_eu_mean
 print(f"Mean SHAP for founding EU \n {predictor}: {old_eu_mean}")
 print(f"Mean SHAP for newer EU \n {predictor}: {new_eu_mean}")
 print(f"Difference between the two \n {predictor}: {mean_shap_diff}")
+
+# Permutation test
+countries = old_eu + new_eu
+n_old = len(old_eu)
+difference = []
+
+rdm = random.Random(42)
+for i in range(repeat):
+    re_old = rdm.sample(countries, n_old)
+    re_new = [c for c in countries if c not in re_old]
+
+    X_train_re_old, X_test_re_old, y_train_re_old, y_test_re_old, df_re_old = load_data(
+        data_path, codebook, re_old, random_state, nonresponse_dict=nonresponse_dict
+    )
+
+    X_train_re_new, X_test_re_new, y_train_re_new, y_test_re_new, df_re_new = load_data(
+        data_path, codebook, re_new, random_state, nonresponse_dict=nonresponse_dict
+    )
+
+    model_re_old = fit_model(X_train_re_old, y_train_re_old, df_re_old, model_name, random_state)
+    model_re_new = fit_model(X_train_re_new, y_train_re_new, df_re_new, model_name, random_state)
+
+    shap_re_old = shap_values(model_re_old, X_test_re_old)
+    shap_re_new = shap_values(model_re_new, X_test_re_new)
+
+    shap_re_old_df = pd.DataFrame(shap_re_old, columns=X_test_re_old.columns)
+    shap_re_new_df = pd.DataFrame(shap_re_new, columns=X_test_re_new.columns)
+
+    re_old_mean = shap_re_old_df[predictor].mean()
+    re_new_mean = shap_re_new_df[predictor].mean()
+    mean_re_shap_diff = re_new_mean - re_old_mean
+    difference.append(mean_re_shap_diff)
+
+difference = np.array(difference)
+print(f"Resampling done")
+
+# Calculating p-value
+count = 0
+for diff in difference:
+    if diff <= mean_shap_diff:
+        count+=1
+p_value = count/repeat
+print(f"The p-value is {p_value}")
+print(f"Is it significant (p<0.05): {p_value<0.05}")

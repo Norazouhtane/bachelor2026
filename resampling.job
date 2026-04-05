@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=resampling       # Job name
+#SBATCH --output=resampling.%j.out      # Name of output file
+#SBATCH --cpus-per-task=4       # CPU cores
+#SBATCH --mem=16G       # Memory per node
+#SBATCH --time=04:00:00     # Max run time (hh:mm:ss)
+#SBATCH --partition=scavenge        # Run on scavenge queue 
+
+echo "Job started"
+echo "Running on node: $(hostname)"
+
+module load Python/3.11.3-GCCcore-12.3.0
+python3 -m venv --clear "$HOME/venv_bachelor"
+source "$HOME/venv_bachelor/bin/activate"
+
+# Install dependencies
+echo "Installing dependencies"
+python3 -m pip install --upgrade pip
+python3 -m pip install -r "$SLURM_SUBMIT_DIR/requirements.txt"
+
+# Run the script
+cd "$SLURM_SUBMIT_DIR/scripts"
+
+echo "Running resampling.py from: $(pwd)"
+python resampling.py
+
+echo "Job finished"

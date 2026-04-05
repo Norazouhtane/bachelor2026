@@ -1,8 +1,6 @@
-loguru
-mkdocs
-pip
-python-dotenv
-ruff
-tqdm
-typer
--e .
+pandas
+numpy
+scikit-learn
+shap
+matplotlib
+beautifulsoup4
