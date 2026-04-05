@@ -89,113 +89,64 @@ sports_cols = [
     'sptcref', 'sptcna', 'sptcnn', 'sptcmmb', 'sptcptp', 'sptcdm',
     'sptcvw', 'sptcfrd', 'cltofrd', 'trufrd', 'prfofra', 'cnsofrd',
     'hmnofrd', 'epaofrd', 'rlgofrd', 'prtyfrd', 'setofrd', 'sclcfrd',
-    'othvfrd', 'cltoref', ''
+    'othvfrd', 'cltoref', 'cltona', 'cltonn', 'cltommb', 'cltoptp',
+    'cltodm', 'cltovw', 'truref', 'truna', 'trunn', 'trummb', 'truptp',
+    'trudm', 'truvw', 'prforef', 'prfona', 'prfonn', 'prfommb', 'prfoptp',
+    'prfodm', 'prfovw', 'cnsoref', 'cnsona', 'cnsonn', 'cnsommb', 'cnsoptp',
+    'cnsodm', 'cnsovw', 'hmnoref', 'hmnona', 'hmnonn', 'hmnommb', 'hmnoptp',
+    'hmnodm', 'hmnovw', 'epaoref', 'epaona', 'epaonn', 'epaommb', 'epaoptp',
+    'epaodm', 'epaovw', 'rlgoref', 'rlgona', 'rlgonn', 'rlgommb', 'rlgoptp',
+    'rlgodm', 'rlgovw', 'prtyref', 'prtyna', 'prtynn', 'prtymmb', 'prtyptp',
+    'prtydm', 'prtyvw', 'setoref', 'setona', 'setonn', 'setommb', 'setoptp',
+    'setodm', 'setovw', 'sclcref', 'sclcna', 'sclcnn', 'sclcmmb', 'sclcptp',
+    'sclcdm', 'sclcvw', 'othvref', 'othvna', 'othvnn', 'othvmmb', 'othvptp',
+    'othvdm', 'othvvw', 'impfml', 'impfrds', 'implsrt', 'imppol', 'impwrk',
+    'imprlg', 'impvo'
 ]
-
-# Religion present variables 
-religion_present_cols = [
-    'rlgdnbat', 'rlgdncy', 'rlgdnafi', 'rlgdnagr', 'rlgdnhu', 'rlgdnais',
-    'rlgdnie', 'rlgdnlv', 'rlgdnlt', 'rlgdme', 'rlgdnanl', 'rlgdnno',
-    'rlgdnapl', 'rlgdnapt', 'rlgdnrs', 'rlgdnask', 'rlgdnase', 'rlgdnach',
-    'rlgdnaua', 'rlgdngb', 'rlgdnade'
-]
-
-# Religion past variables
-religion_past_cols = [
-    'rlgdebat', 'rlgdecy', 'rlgdeafi', 'rlgdeagr', 'rlgdehu', 'rlgdeais',
-    'rlgdeie', 'rlgdelv', 'rlgdelt', 'rlgdeme', 'rlgdeanl', 'rlgdeno',
-    'rlgdeapl', 'rlgdeapt', 'rlgders', 'rlgdeask', 'rlgdease', 'rlgdeach',
-    'rlgdeaua', 'rlgdegb', 'rlgdeade'
-]
-
-# Health variables
-health_cols = [
-    'etfruit', 'eatveg', 'dosprt', 'cgtsmok', 'alcfreq', 'alcwkdy', 'alcwknd',
-    'alcbnge', 'height', 'weighta', 'dshltgp', 'dshltms', 'dshltnt', 'dshltref',
-    'dshltdk', 'dshltna', 'trhltacu', 'trhltacp', 'trhltcm', 'trhltch', 'trhltos',
-    'trkltho', 'trhltht', 'trhlthy', 'trhltmt', 'trhltpt', 'trhltre', 'trhltsh',
-    'trhltnt', 'trhltref', 'trhltdk', 'trhltna', 'hltprhc', 'hltprhb', 'hltprbp',
-    'hltpral', 'hltprbn', 'hltprpa', 'hltprpf', 'hltprsd', 'hltprsc', 'hltprsh',
-    'hltprdi', 'hltprnt', 'hltprref', 'hltprdk', 'hltprna', 'hltphhc', 'hltphhb',
-    'hltphbp', 'hltphal', 'hltphbn', 'hltphpa', 'hltphpf', 'hltphsd', 'hltphsc',
-    'hltphsh', 'hltphdi', 'hltphnt', 'hltphnap', 'hltphref', 'hltphdk', 'hltphna',
-    'hltprca', 'cancfre', ''
-]   #cigarette smoke # drink and binge alcohol #depressed #conflict household 
 
 # Household grid variables
 house_cols = [
     'gndr', 'gndr2', 'gndr3', 'gndr4', 'gndr5', 'gndr6', 'gndr7', 'gndr8',
-    'gndr9', 'gndr10', 'gndr11', 'gndr12', 'yrbrn2', 'yrbrn3', 'yrbrn4', 'yrbrn5',
-    'yrbrn6', 'yrbrn7', 'yrbrn8', 'yrbrn9', 'yrbrn10', 'yrbrn11', 'yrbrn12',
+    'gndr9', 'gndr10', 'gndr11', 'gndr12', 'gndr13', 'gndr14', 'gndr15', 
+    'yrbrn2', 'yrbrn3', 'yrbrn4', 'yrbrn5', 'yrbrn6', 'yrbrn7', 'yrbrn8', 
+    'yrbrn9', 'yrbrn10', 'yrbrn11', 'yrbrn12', 'yrbrn13', 'yrbrn14', 'yrbrn15',
     'rshipa2', 'rshipa3', 'rshipa4', 'rshipa5', 'rshipa6', 'rshipa7', 'rshipa8',
-    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 'rshpsgb', 'marstgb'
-] #rshpsgb marstgb UK
+    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 'rshipa13', 'rshipa14', 'rshipa15'
+] 
 
 # Respondent's education variables
 education_cols = [
-    'edlveat', 'edlvebe', 'edlvebg', 'edlvehr', 'edlvgcy', 'edlvdee',
-    'edlvdfi', 'edlvdfr', 'edlvegr', 'edlvdahu', 'edlvdis', 'edlvdie',
-    'edubil1', 'eduail2', 'edlvfit', 'edlvelv', 'edlvdlt', 'edlveme',
-    'edlvenl', 'edlveno', 'edlvipl', 'edlvept', 'edlvdrs', 'edlvdsk',
-    'edlvesi', 'edlvies', 'edlvdse', 'edlvdch', 'edlvdua', 'educgb1',
-    'edubgb2', 'edagegb', 'edudde1', 'educde2'
+    'edlvbe', 'edlvch', 'edlvcz', 'edlvdk', 'edlves', 'edlvfr', 'edlvgb',
+    'edlvgr', 'edlvhu', 'edlvie', 'edlvil', 'edlvit', 'edlvlu', 'edlvnl',
+    'edlvno', 'edlvpl', 'edlvpt', 'edlvse', 'wrkctrhu', 'iscoco', 'nacer1'
 ]
 
-# Partner's education variables
+# Partner variables
 partner_education_cols = [
-    'eiscedp', 'edlvpfat', 'edlvpebe', 'edlvpebg', 'edlvpehr', 'edlvpgcy',
-    'edlvpdee', 'edlvpdfi', 'edlvpdfr', 'edlvpegr', 'edlvpdahu', 'edlvpdis',
-    'edlvpdie', 'edupail2', 'edupbil1', 'edlvpfit', 'edlvpelv', 'edlvpdlt',
-    'edlvpeme', 'edlvpenl', 'edlvpeno', 'edlvphpl', 'edlvpept', 'edlvpdrs',
-    'edlvpdsk', 'edlvpesi', 'edlvphes', 'edlvpdse', 'edlvpdch', 'edlvpdua',
-    'edupcgb1', 'edupbgb2', 'edagepgb', 'edupdde1', 'edupcde2'
+    'iscocop', 'occf14ie', 'occm14ie', 'martlfr'
 ]
 
-# Father's education variables
-father_education_cols = [
-    'eiscedf', 'edlvfeat', 'edlvfebe', 'edlvfebg', 'edlvfehr', 'edlvfgcy',
-    'edlvfdee', 'edlvfdfi', 'edlvfdfr', 'edlvfegr', 'edlvfdahu', 'edlvfdis',
-    'edlvfdie', 'edufail2', 'edufbil1', 'edlvffit', 'edlvfelv', 'edlvfdlt',
-    'edlvfeme', 'edlvfenl', 'edlvfeno', 'edlvfgpl', 'edlvfept', 'edlvfdrs',
-    'edlvfdsk', 'edlvfesi', 'edlvfges', 'edlvfdse', 'edlvfdch', 'edlvfdua',
-    'edufcgb1', 'edufbgb2', 'edagefgb', 'edufcde1', 'edufbde2'
-]
-
-# Mother's education variables
-mother_education_cols = [
-    'eiscedm', 'edlvmeat', 'edlvmebe', 'edlvmebg', 'edlvmehr', 'edlvmgcy',
-    'edlvmdee', 'edlvmdfi', 'edlvmdfr', 'edlvmegr', 'edlvmdahu', 'edlvmdis',
-    'edlvmdie', 'edumail2', 'edumbil1', 'edlvmfit', 'edlvmelv', 'edlvmdlt',
-    'edlvmeme', 'edlvmenl', 'edlvmeno', 'edlvmgpl', 'edlvmept', 'edlvmdrs',
-    'edlvmdsk', 'edlvmesi', 'edlvmges', 'edlvmdse', 'edlvmdch', 'edlvmdua',
-    'edumcgb1', 'edumbgb2', 'edagemgb', 'edumcde1', 'edumbde2'
-]
-
-# Test questions
-test_cols = [
-    'testji1', 'testji2', 'testji3', 'testji4', 'testji5', 'testji6', 'testji7', 
-    'testji8', 'testji9'
-]
-
-# Covid variables
-covid_cols = [
-    'respc19a', 'symtc19', 'symtnc19', 'vacc19'
+# Country specific region variables
+region_cols = [
+    'regionat', 'regionbe', 'regioach', 'regioncz', 'regionde', 'regiondk',
+    'regiones', 'regionfi', 'regionfr', 'regiongb', 'regiongr', 'regionhu',
+    'regionie', 'regionil', 'regionit', 'regionlu', 'regionlu', 'regionnl',
+    'regionno', 'regionpl', 'regionpt', 'regionse', 'regionsi', 'intewde'
 ]
 
 # Administrative and metadata variables
 admin_cols = [
-    'recon', 'inwds', 'ainws', 'ainwe', 'binwe', 'cinwe', 'dinwe', 'einwe',
-    'finwe', 'hinwe', 'iinwe', 'kinwe', 'rinwe', 'inwde', 'jinws', 'jinwe',
-    'inwtm', 'mode', 'domain', 'prob', 'stratum', 'psu', 'name', 'essround', 
-    'edition', 'proddate', 'idno', 'dweight', 'pweight', 'cntry', 'pspwght'
+    'inwdd', 'inwmm', 'inwyr', 'inwshh', 'inwsmm', 'inwemm', 'inwehh',
+    'inwtm', 'spltadm', 'supqadm', 'name', 'essround', 'edition', 'proddate',
+    'idno', 'cntry', 'dweight', 'pspwght', 'pweight'
 ]
 
 # Combine all columns to drop
 cols_to_drop = (party_voted_cols + party_close_cols + 
-                religion_present_cols + religion_past_cols + 
-                health_cols + house_cols + education_cols + 
-                partner_education_cols + father_education_cols + 
-                mother_education_cols + test_cols + covid_cols +
-                admin_cols)
+                party_member_cols + sports_cols +
+                house_cols + education_cols + 
+                partner_education_cols + region_cols +
+                admin_cols
+                )
 
 

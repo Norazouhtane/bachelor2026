@@ -178,12 +178,17 @@ admin_cols = [
     'edition', 'proddate', 'idno', 'dweight', 'pweight', 'cntry', 'pspwght'
 ]
 
+# Variables with codes as variables
+code_cols = [
+    'anctrya1', 'anctrya2', 'isco08', 'isco08p'
+]
+
 # Combine all columns to drop
 cols_to_drop = (party_voted_cols + party_close_cols + 
                 religion_present_cols + religion_past_cols + 
                 health_cols + house_cols + education_cols + 
                 partner_education_cols + father_education_cols + 
                 mother_education_cols + test_cols + covid_cols +
-                admin_cols)
+                admin_cols + code_cols)
 
 
