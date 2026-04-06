@@ -12,7 +12,7 @@ shap         = True
 grid_search  = False
 random_state = 42
 
-output_dir = f"../output/{country}_{model_name}_1"
+output_dir = f"../output/{country}_{model_name}"
 os.makedirs(output_dir, exist_ok=True)
 
 X_train, X_test, y_train, y_test, df = load_data(data_path, codebook, country, random_state)
