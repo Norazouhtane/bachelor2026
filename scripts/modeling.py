@@ -16,10 +16,10 @@ def choose_model(model_name, random_state):
 
     if model_name == "lgbm":
         return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
-    elif model_name == "logistic":
-        return LogisticRegression(random_state=random_state)
-    elif model_name == "hist":
+    elif model_name == "hist11":
         return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
+    elif model_name == "hist1":
+        return HistGradientBoostingClassifier(learning_rate=0.3, max_depth=2, max_iter=100, min_samples_leaf=3, random_state=random_state, class_weight="balanced")
     elif model_name == "rf":
         return RandomForestClassifier(max_depth=50, max_features=None, min_samples_leaf=1, n_estimators=10, random_state=random_state)
     
@@ -80,13 +80,10 @@ parameters = {
         "n_estimators": [100, 150, 200]
     },
     "hist": {
-        "learning_rate": [0.25, 0.3, 0.4],
-        "max_depth":    [2, 3, 5],
-        "min_samples_leaf": [1, 2],
-        "max_iter": [100, 200, 300]
-    },
-    "logistic": {
-        "C": [0.01, 0.1, 1, 10],
+        "learning_rate": [0.25, 0.3, 0.35],
+        "max_depth":    [1, 2, 3, 5],
+        "min_samples_leaf": [1, 2, 3, 4],
+        "max_iter": [100, 150, 200, 250, 300]
     },
      "rf": {
         "max_features": ["sqrt", "log2", None],

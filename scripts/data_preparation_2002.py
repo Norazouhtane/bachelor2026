@@ -21,7 +21,7 @@ def load_data(
     # Filter the dataframe
     df = df[df['cntry'].isin(country)].copy()
     df = df[df['ctzcntr'] == 1] # eligible national election voters (citizenship)
-    df = df[df['yrbrn']>= 18] # eligible national election voters (age)
+    df = df[df['agea']>= 18] # eligible national election voters (age)
     df['vote'] = df['vote'].replace([3,7,8,9], np.nan) # drop non-response values for target
     df = df[df['vote'].notna()]
 
