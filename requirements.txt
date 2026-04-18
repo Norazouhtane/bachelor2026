@@ -4,4 +4,4 @@ scikit-learn
 shap
 matplotlib
 beautifulsoup4
-#lightgbm==4.0.0
+xgboost

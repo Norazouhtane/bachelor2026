@@ -5,11 +5,11 @@ import os
 
 # Configs
 country      = ["DE"]
-model_name   = "lgbm1"      
+model_name   = "xgb"      
 data_path    = "../data/raw/ESS1.csv"
 codebook     = "../codebooks/ESS1e06_7 codebook.html"
 shap         = False
-grid_search  = False
+grid_search  = True
 random_state = 42
 
 output_dir = f"../output/{country}_{model_name}"

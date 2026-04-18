@@ -78,10 +78,12 @@ def fit_model(X_train, y_train, df, model_name, random_state):
 
 parameters = {
     "lgbm": {
-        "max_depth": [-1, 10, 15, 20],
-        "num_leaves":    [15, 30, 45],
-        "learning_rate": [0.7, 0.75, 0.8],
-        "n_estimators": [100, 150, 200]
+        "max_depth": [-1, 10, 15, 20], #doc: <=0 means no limit
+        "num_leaves":    [15, 30, 45, 100, 150],
+        "learning_rate": [0,5, 0.7, 0.75, 0.8],
+        #"n_estimators": [100, 150, 200],
+        "min_data_in_leaf": [5, 10, 30, 50, 100],
+        "num_threads": [8]
     },
     "hist": {
         "learning_rate": [0.25, 0.3, 0.35],
@@ -95,4 +97,10 @@ parameters = {
         "min_samples_leaf": [1, 2, 3],
         "n_estimators": [5, 10, 100, 200]
     },
+    "xgb": {
+        "max_depth":     [3, 5, 7, 10],
+        "learning_rate": [0.1, 0.2, 0.5], #also called eta
+        "subsample":     [0.5, 0.75, 1.0],
+        "objective":     ["binary:hinge"]
+    }
 }
