@@ -5,10 +5,10 @@ import os
 
 # Configs
 country      = ["DE"]
-model_name   = "hist1"      
+model_name   = "lgbm1"      
 data_path    = "../data/raw/ESS1.csv"
 codebook     = "../codebooks/ESS1e06_7 codebook.html"
-shap         = True
+shap         = False
 grid_search  = False
 random_state = 42
 

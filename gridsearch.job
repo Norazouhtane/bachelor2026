@@ -17,6 +17,7 @@ source "$HOME/venv_bachelor/bin/activate"
 echo "Installing dependencies"
 python3 -m pip install --upgrade pip
 python3 -m pip install -r "$SLURM_SUBMIT_DIR/requirements.txt"
+python3 -m pip install lightgbm
 
 # Run the script
 cd "$SLURM_SUBMIT_DIR/scripts"

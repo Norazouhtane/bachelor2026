@@ -1,11 +1,11 @@
 import os
 import pickle
 import pandas as pd
-#import lightgbm as lgb
+import lightgbm as lgb
+import xgboost as xgb
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 
 
@@ -14,14 +14,18 @@ def choose_model(model_name, random_state):
     MAKE DOCSTRING
     """
 
-    if model_name == "lgbm":
+    if model_name == "lgbm1":
+        return lgb.LGBMClassifier(random_state=random_state)
+    elif model_name == "lgbm11":
         return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
-    elif model_name == "hist11":
-        return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
     elif model_name == "hist1":
         return HistGradientBoostingClassifier(learning_rate=0.3, max_depth=2, max_iter=100, min_samples_leaf=3, random_state=random_state, class_weight="balanced")
+    elif model_name == "hist11":
+        return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
     elif model_name == "rf":
         return RandomForestClassifier(max_depth=50, max_features=None, min_samples_leaf=1, n_estimators=10, random_state=random_state)
+    elif model_name == "xgb":
+        return xgb.XGBClassifier(objective="binary:logistic", n_estimators=100, learning_rate=0.1, random_state=random_state)
     
 
 def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
