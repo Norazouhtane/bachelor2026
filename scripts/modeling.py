@@ -14,7 +14,7 @@ def choose_model(model_name, random_state):
     MAKE DOCSTRING
     """
 
-    if model_name == "lgbm1":
+    if model_name == "lgbm":
         return lgb.LGBMClassifier(random_state=random_state)
     elif model_name == "lgbm11":
         return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
