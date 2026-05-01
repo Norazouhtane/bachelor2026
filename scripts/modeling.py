@@ -1,4 +1,5 @@
 import os
+import json
 import pickle
 import pandas as pd
 import lightgbm as lgb
@@ -6,6 +7,7 @@ import xgboost as xgb
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from sklearn.model_selection import GridSearchCV
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 
 
@@ -23,9 +25,11 @@ def choose_model(model_name, random_state):
     elif model_name == "hist11":
         return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
     elif model_name == "rf":
-        return RandomForestClassifier(max_depth=50, max_features=None, min_samples_leaf=1, n_estimators=10, random_state=random_state)
+        return RandomForestClassifier(random_state=random_state)
     elif model_name == "xgb":
         return xgb.XGBClassifier(objective="binary:logistic", n_estimators=100, learning_rate=0.1, random_state=random_state)
+    elif model_name == "dummy":
+        return DummyClassifier(strategy="stratified", random_state=random_state)
     
 
 def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
@@ -37,10 +41,17 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
     weights = df.loc[X_train.index, 'anweight']
 
     if grid_search:
+        parameters["xgb"]["scale_pos_weight"] = [sum(y_train == 0) / sum(y_train == 1)]
         model = GridSearchCV(model, parameters[model_name], cv=5, scoring="f1_macro", n_jobs=-1)
         model.fit(X_train, y_train, sample_weight=weights)
         print(f"  Best params: {model.best_params_}")
         print(f"  Best CV score: {model.best_score_:.4f}")
+        with open(os.path.join(output_dir, "best_params.json"), "w") as f:
+            json.dump({
+                "best_params": model.best_params_,
+                "best_CV_score": model.best_score_,
+                "search_parameters": parameters[model_name]
+            }, f, indent=2)
         model = model.best_estimator_  
     else:
         model.fit(X_train, y_train, sample_weight=weights)
@@ -77,30 +88,28 @@ def fit_model(X_train, y_train, df, model_name, random_state):
     return model
 
 parameters = {
+    "rf": {
+        "max_features": ["sqrt", "log2"],
+        "max_depth":    [5, 10, 15, 20],
+        "min_samples_leaf": [10, 15, 20, 25],
+        "n_estimators": [250, 300, 350, 400],
+        "class_weight": ["balanced"]
+    },
     "lgbm": {
-        "max_depth": [-1, 10, 15, 20], #doc: <=0 means no limit
-        "num_leaves":    [15, 30, 45, 100, 150],
-        "learning_rate": [0,5, 0.7, 0.75, 0.8],
+        "max_depth": [11, 13, 15], #doc: <=0 means no limit
+        "num_leaves":    [12, 15, 17],
+        "learning_rate": [0.05, 0.1, 0.15],
+        "min_data_in_leaf": [40, 50, 60],
+        "class_weight": ["balanced"],
+        "n_jobs": [1],
+        #"n_estimators": [100]
+        #"num_threads": [8]
         #"n_estimators": [100, 150, 200],
-        "min_data_in_leaf": [5, 10, 30, 50, 100],
-        "num_threads": [8]
-    },
-    "hist": {
-        "learning_rate": [0.25, 0.3, 0.35],
-        "max_depth":    [1, 2, 3, 5],
-        "min_samples_leaf": [1, 2, 3, 4],
-        "max_iter": [100, 150, 200, 250, 300]
-    },
-     "rf": {
-        "max_features": ["sqrt", "log2", None],
-        "max_depth":    [15, 20, 50, 100],
-        "min_samples_leaf": [1, 2, 3],
-        "n_estimators": [5, 10, 100, 200]
     },
     "xgb": {
-        "max_depth":     [3, 5, 7, 10],
-        "learning_rate": [0.1, 0.2, 0.5], #also called eta
-        "subsample":     [0.5, 0.75, 1.0],
-        "objective":     ["binary:hinge"]
+        "max_depth": [6, 8, 10, 12],
+        "learning_rate": [0.04, 0.05, 0.1, 0.2], #also called eta
+        "subsample": [0.5, 0.75, 1.0],
+        "objective": ["binary:hinge"]
     }
 }
