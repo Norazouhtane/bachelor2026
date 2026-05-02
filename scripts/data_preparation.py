@@ -58,11 +58,11 @@ def load_data(
     return X_train, X_test, y_train, y_test, df
 
 
-# Columns to drop: country-specific variables and/or irrelevant
+# Columns to drop: country-specific variables and/or irrelevant for 2023
 
 # Party voted variables 
 party_voted_cols = [
-    'prtvtat', 'prtvtebe', 'prtvtfbg', 'prtvtchr', 'prtvtccy', 'prtvtiee',
+    'prtvtdat', 'prtvtebe', 'prtvtfbg', 'prtvtchr', 'prtvtccy', 'prtvtiee',
     'prtvtffi', 'prtvtffr', 'prtvtegr', 'prtvthhu', 'prtvteis', 'prtvteie',
     'prtvteil', 'prtvteit', 'prtvtblv', 'prtvclt1', 'prtvclt2', 'prtvclt3',
     'prtvtbme', 'prtvtinl', 'prtvtcno', 'prtvtfpl', 'prtvtept', 'prtvtbrs',
@@ -95,13 +95,16 @@ religion_past_cols = [
     'rlgdeaua', 'rlgdegb', 'rlgdeade'
 ]
 
-# Social variables
+# Social and politcal variables
 social_cols = [
     'happy', 'sclmeet', 'inprdsc', 'sclact', 'dscrrce', 'dscrntn', 'dscrrlg', 
     'dscrlng', 'dscretn', 'dscrage', 'dscrgnd', 'dscrsex', 'dscrdsb', 
     'dscroth', 'dscrdk', 'dscrref', 'dscrnap', 'dscrna', 'lnghom1', 'lnghom2', 
-    'fbrncntc', 'mbrncntc'
-] #'health', 'hlthhmp', 'dscrgrp' kept
+    'fbrncntc', 'mbrncntc', 'ccnthum', 'wrclmch', 'admrclc', 'atcherp', 'vteurmmb',
+    'vteubcmb', 'atchctr', 'hmsacld', 'hmsfmlsh', 'loylead', 'lrnobed', 'ctrlife',
+    'actrolga', 'cptppola', 'psppipla', 'psppsgva', 'donprty', 'pstplonl',
+    'volunfp',
+] #'health', 'hlthhmp', 'dscrgrp', 'ccrdprs' kept
 
 # Health variables
 health_cols = [
@@ -118,8 +121,10 @@ health_cols = [
     'hltphdk', 'hltphna', 'hltprca', 'cancfre', 'cnfpplh', 'fnsdfml', 'jbexpvi', 
     'jbexpti', 'jbexpml', 'jbexpmc', 'jbexpnt', 'jbexpnap', 'jbexpref', 'jbexpdk', 
     'jbexpna', 'jbexevl', 'jbexevh', 'jbexevc', 'jbexera', 'jbexecp', 'jbexebs', 
-    'jbexent', 'jbexenap', 'jbexeref', 'jbexedk', 'jbexena'
-]   #'cgtsmok' kept
+    'jbexent', 'jbexenap', 'jbexeref', 'jbexedk', 'jbexena', 'medtrun', 'medtrnu',
+    'medtrnaa', 'medtrnl', 'medtrnp', 'medtrnt', 'medtrwl', 'medtroc', 'medtroth',
+    'medtrdk', 'medtrnap', 'medtrref', 'medtrna', 'trhltho', 'cgtsmok',
+]  
 
 # Gender
 gender_cols = [
@@ -135,14 +140,15 @@ house_cols = [
     'gndr9', 'gndr10', 'gndr11', 'gndr12', 'yrbrn2', 'yrbrn3', 'yrbrn4', 'yrbrn5',
     'yrbrn6', 'yrbrn7', 'yrbrn8', 'yrbrn9', 'yrbrn10', 'yrbrn11', 'yrbrn12',
     'rshipa2', 'rshipa3', 'rshipa4', 'rshipa5', 'rshipa6', 'rshipa7', 'rshipa8',
-    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 
-] #'gndr', 'yrbrn', 'agea', 'agegroup' kept
+    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 'agegroup'
+] #'gndr', 'yrbrn', 'agea', kept
 
 # Socio-demographic variables
 socio_demo_cols = [
     'rshpsts', 'rshpsgb', 'lvgptnea', 'dvrcdeva', 'marsts', 'marstgb', 'maritalb', 
     'chldhhe', 'domicil', 'paccmoro', 'paccdwlr', 'pacclift', 'paccnbsh', 'paccocrw', 
-    'paccxhoc', 'paccnois', 'paccinro', 'paccnt', 'paccref', 'paccdk', 'paccna' 
+    'paccxhoc', 'paccnois', 'paccinro', 'paccnt', 'paccref', 'paccdk', 'paccna',
+    
 ] #'regunit', 'region' kept
 
 # Respondent's education variables
@@ -152,7 +158,7 @@ education_cols = [
     'edubil1', 'eduail2', 'edlvfit', 'edlvelv', 'edlvdlt', 'edlveme',
     'edlvenl', 'edlveno', 'edlvipl', 'edlvept', 'edlvdrs', 'edlvdsk',
     'edlvesi', 'edlvies', 'edlvdse', 'edlvdch', 'edlvdua', 'educgb1',
-    'edubgb2', 'edagegb', 'edudde1', 'educde2', 'atncrse'
+    'edubgb2', 'edagegb', 'edudde1', 'educde2', 'atncrse', 'tporgwk'
 ] #'edulvlb', 'eisced' kept
 
 # Partner's education/employment variables
@@ -164,8 +170,10 @@ partner_education_cols = [
     'edlvpesi', 'edlvphes', 'edlvpdse', 'edlvpdch', 'edlvpdua', 'edupcgb1', 
     'edupbgb2', 'edagepgb', 'edupdde1', 'edupcde2', 'pdwrkp', 'edctnp', 
     'uemplap', 'uemplip', 'dsbldp', 'rtrdp', 'cmsrvp', 'hswrkp', 'dngothp', 
-    'dngdkp', 'dngnapp', 'dngrefp', 'dngnap', 'crpdwkp', 'emprelp', 'wkhtotp'
-] #'edulvlpb', 'eiscedp', 'mnactp' kept
+    'dngdkp', 'dngnapp', 'dngrefp', 'dngnap', 'crpdwkp', 'emprelp', 'wkhtotp',
+    'edulvlpb'
+    
+] #'eiscedp', 'mnactp' kept
 
 # Father's education/employment variables
 father_education_cols = [
@@ -175,8 +183,8 @@ father_education_cols = [
     'edlvfeme', 'edlvfenl', 'edlvfeno', 'edlvfgpl', 'edlvfept', 'edlvfdrs',
     'edlvfdsk', 'edlvfesi', 'edlvfges', 'edlvfdse', 'edlvfdch', 'edlvfdua',
     'edufcgb1', 'edufbgb2', 'edagefgb', 'edufcde1', 'edufbde2', 'emprf14',
-    'occf14b'
-] #'edulvlfb', 'eiscedf' kept
+    'occf14b', 'edulvlfb'
+] #'eiscedf' kept
 
 # Mother's education/employment variables
 mother_education_cols = [
@@ -185,8 +193,9 @@ mother_education_cols = [
     'edlvmdie', 'edumail2', 'edumbil1', 'edlvmfit', 'edlvmelv', 'edlvmdlt',
     'edlvmeme', 'edlvmenl', 'edlvmeno', 'edlvmgpl', 'edlvmept', 'edlvmdrs',
     'edlvmdsk', 'edlvmesi', 'edlvmges', 'edlvmdse', 'edlvmdch', 'edlvmdua',
-    'edumcgb1', 'edumbgb2', 'edagemgb', 'edumcde1', 'edumbde2', 'emprm14', 'occm14b'
-] #'edulvlmb', 'eiscedm' kept
+    'edumcgb1', 'edumbgb2', 'edagemgb', 'edumcde1', 'edumbde2', 'emprm14', 
+    'occm14b', 'edulvlmb'
+] #'eiscedm' kept
 
 # Test questions
 test_cols = [
@@ -208,7 +217,7 @@ admin_cols = [
     'edition', 'proddate', 'idno', 'dweight', 'pweight', 'cntry', 'pspwght'
 ]
 
-# Variables with codes as variables
+# Variables with codes not needed
 code_cols = [
     'anctrya1', 'anctrya2', 'isco08', 'isco08p', 'nacer2'
 ]
