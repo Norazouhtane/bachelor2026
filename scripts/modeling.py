@@ -18,16 +18,10 @@ def choose_model(model_name, random_state):
 
     if model_name == "lgbm":
         return lgb.LGBMClassifier(random_state=random_state)
-    elif model_name == "lgbm11":
-        return lgb.LGBMClassifier(learning_rate=0.7, max_depth=10, n_estimators=150, num_leaves=30, random_state=random_state)
-    elif model_name == "hist1":
-        return HistGradientBoostingClassifier(learning_rate=0.3, max_depth=2, max_iter=100, min_samples_leaf=3, random_state=random_state, class_weight="balanced")
-    elif model_name == "hist11":
-        return HistGradientBoostingClassifier(learning_rate=0.25, max_depth=3, max_iter=100, min_samples_leaf=1, random_state=random_state, class_weight="balanced")
     elif model_name == "rf":
         return RandomForestClassifier(random_state=random_state)
     elif model_name == "xgb":
-        return xgb.XGBClassifier(objective="binary:logistic", n_estimators=100, learning_rate=0.1, random_state=random_state)
+        return xgb.XGBClassifier(random_state=random_state)
     elif model_name == "dummy":
         return DummyClassifier(strategy="stratified", random_state=random_state)
     
@@ -90,16 +84,16 @@ def fit_model(X_train, y_train, df, model_name, random_state):
 parameters = {
     "rf": {
         "max_features": ["sqrt", "log2"],
-        "max_depth":    [5, 10, 15, 20],
-        "min_samples_leaf": [10, 15, 20, 25],
-        "n_estimators": [250, 300, 350, 400],
+        "max_depth":    [15, 20, 25, 30],
+        "min_samples_leaf": [5, 10, 15, 20, 25],
+        "n_estimators": [300, 350, 400, 450, 500, 550],
         "class_weight": ["balanced"]
     },
     "lgbm": {
-        "max_depth": [11, 13, 15], #doc: <=0 means no limit
-        "num_leaves":    [12, 15, 17],
-        "learning_rate": [0.05, 0.1, 0.15],
-        "min_data_in_leaf": [40, 50, 60],
+        "max_depth": [5, 10, 15, 20, 25, 30], #doc: <=0 means no limit
+        "num_leaves":    [20, 30, 40, 50, 60],
+        "learning_rate": [0.05, 0.1, 0.15, 0.2, 0.25],
+        "min_data_in_leaf": [70, 80, 90, 100, 110],
         "class_weight": ["balanced"],
         "n_jobs": [1],
         #"n_estimators": [100]
@@ -107,9 +101,9 @@ parameters = {
         #"n_estimators": [100, 150, 200],
     },
     "xgb": {
-        "max_depth": [6, 8, 10, 12],
-        "learning_rate": [0.04, 0.05, 0.1, 0.2], #also called eta
-        "subsample": [0.5, 0.75, 1.0],
+        "max_depth": [2, 4, 7, 10, 12],
+        "learning_rate": [0.2, 0.25, 0.3, 0.35], #also called eta
+        "subsample": [0.7, 0.8, 0.9, 1.0],
         "objective": ["binary:hinge"]
     }
 }
