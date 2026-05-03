@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
+import category_encoders as ce
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from variable_cleaner import clean_ess_data
 
 def load_data(
@@ -44,19 +44,17 @@ def load_data(
     X = df[predictor_cols].copy()
     y = df['vote'].copy()
 
-    categorical_cols = X.select_dtypes(exclude=[np.number]).columns.tolist()
-    if categorical_cols:
-        X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
-
-    #scaler = StandardScaler()
-
     # Train test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
 
-    #X_train_scaled = scaler.fit_transform(X_train)
-    #X_test_scaled = scaler.transform(X_test)
+    # One hot encode categorical columns
+    categorical_cols = X.select_dtypes(exclude=[np.number]).columns.tolist()
+    if categorical_cols:
+        one_hot = ce.OneHotEncoder(cols=categorical_cols, use_cat_names=True)
+        X_train = one_hot.fit_transform(X_train)
+        X_test = one_hot.transform(X_test)
 
     return X_train, X_test, y_train, y_test, df
 
