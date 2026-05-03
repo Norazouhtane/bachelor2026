@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=resampling       # Job name
 #SBATCH --output=resampling.%j.out      # Name of output file
-#SBATCH --cpus-per-task=4       # CPU cores
+#SBATCH --cpus-per-task=16       # CPU cores
 #SBATCH --mem=16G       # Memory per node
-#SBATCH --time=04:00:00     # Max run time (hh:mm:ss)
-#SBATCH --partition=scavenge        # Run on scavenge queue 
+#SBATCH --time=72:00:00     # Max run time (hh:mm:ss)
+#SBATCH --partition=cores        # Run on scavenge queue 
 
 echo "Job started"
 echo "Running on node: $(hostname)"
