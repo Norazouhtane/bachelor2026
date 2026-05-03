@@ -11,7 +11,7 @@ echo "Running on node: $(hostname)"
 
 module load Python/3.11.3-GCCcore-12.3.0
 #python3 -m venv --clear "$HOME/venv_bachelor"
-source "$HOME/venv/bin/activate"
+source /home/nozo/bachelor2026/venv/bin/activate
 
 # Install dependencies
 #echo "Installing dependencies"
