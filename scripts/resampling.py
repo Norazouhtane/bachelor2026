@@ -1,21 +1,26 @@
 import os
 import random
+import json
 import numpy as np
 import pandas as pd
-from data_preparation import load_data
+from data_preparation_2004 import load_data
 from modeling import fit_model
 from shap_analysis import shap_values
 from variable_cleaner import parse_ess_codebook
 
 # Configs
-old_eu       = ["BE", "DE", "FR", "IT", "NL"]
-new_eu       = ["HR", "BG", "SK", "SI", "PL"]
-model_name   = "hist"      
-data_path    = "../data/raw/ESS11.csv"
-codebook     = "../codebooks/ESS11e04_1 codebook.html"
+old_eu       = ["BE", "FR", "DE", "NL", "IE", "GR", "PT", "ES", "AT", "FI", "SE"]
+new_eu       = ["EE", "HU", "PL", "SK", "SI"]
+model_name   = "all_2004_lgbm"      
+data_path    = "../../data/raw/ESS2.csv"
+codebook     = "../../codebooks/ESS2e03_6 codebook.html"
 repeat       = 1000
 random_state = 42
-predictor    = "polintr"
+# 2004
+predictors = ['polintr', 'clsprty', 'lrscale', 'stfdem', 'trstprl', 'ppltrst', 'eisced', 'agea', 'hincfel', 'mbtru','nwsppol', 'health']
+
+# 2023
+#predictors = ['polintr', 'clsprty', 'lrscale', 'stfdem', 'trstprl', 'ppltrst', 'eisced', 'agea', 'hincfel', 'mbtru', 'nwspol', 'health']
 
 output_dir = f"../output/resampling_test"
 os.makedirs(output_dir, exist_ok=True)
@@ -42,19 +47,20 @@ shap_new = shap_values(model_new, X_test_new)
 
 shap_old_df = pd.DataFrame(shap_old, columns=X_test_old.columns)
 shap_new_df = pd.DataFrame(shap_new, columns=X_test_new.columns)
+observed_diff = {}
+for predictor in predictors:
+    old_eu_mean = shap_old_df[predictor].abs().mean()
+    new_eu_mean = shap_new_df[predictor].abs().mean()
+    observed_diff[predictor] = new_eu_mean - old_eu_mean
 
-old_eu_mean = shap_old_df[predictor].mean()
-new_eu_mean = shap_new_df[predictor].mean()
-mean_shap_diff = new_eu_mean - old_eu_mean
-
-print(f"Mean SHAP for founding EU \n {predictor}: {old_eu_mean}")
-print(f"Mean SHAP for newer EU \n {predictor}: {new_eu_mean}")
-print(f"Difference between the two \n {predictor}: {mean_shap_diff}")
+    print(f"Mean SHAP for founding EU \n {predictor}: {old_eu_mean:.4f}")
+    print(f"Mean SHAP for newer EU \n {predictor}: {new_eu_mean:.4f}")
+    print(f"Difference between the two \n {predictor}: {observed_diff[predictor]:.4f}")
 
 # Permutation test
 countries = old_eu + new_eu
 n_old = len(old_eu)
-difference = []
+difference = {predictor: [] for predictor in predictors}
 
 rdm = random.Random(42)
 for i in range(repeat):
@@ -78,19 +84,31 @@ for i in range(repeat):
     shap_re_old_df = pd.DataFrame(shap_re_old, columns=X_test_re_old.columns)
     shap_re_new_df = pd.DataFrame(shap_re_new, columns=X_test_re_new.columns)
 
-    re_old_mean = shap_re_old_df[predictor].mean()
-    re_new_mean = shap_re_new_df[predictor].mean()
-    mean_re_shap_diff = re_new_mean - re_old_mean
-    difference.append(mean_re_shap_diff)
+    for predictor in predictors:
+        re_old_mean = shap_re_old_df[predictor].abs().mean()
+        re_new_mean = shap_re_new_df[predictor].abs().mean()
+        mean_re_shap_diff = re_new_mean - re_old_mean
+        difference[predictor].append(mean_re_shap_diff)
 
-difference = np.array(difference)
 print(f"Resampling done")
 
 # Calculating p-value
-count = 0
-for diff in difference:
-    if diff <= mean_shap_diff:
-        count+=1
-p_value = count/repeat
-print(f"The p-value is {p_value}")
-print(f"Is it significant (p<0.05): {p_value<0.05}")
+results = []
+for predictor in predictors:
+    null_dist = np.array(difference[predictor])
+    count = 0
+    for diff in null_dist:
+        if abs(diff) >= abs(observed_diff[predictor]): #abs because two tailed
+            count+=1
+    p_value = count/repeat
+    significant = p_value < 0.05
+
+    results.append({
+        "predictor": predictor,
+        "observed_diff": observed_diff[predictor],
+        "p_value": p_value,
+        "significant": significant
+    })
+results_path = os.path.join(output_dir, "resampling_results.json")
+with open(results_path, "w") as f:
+    json.dump(results, f, indent=4)
