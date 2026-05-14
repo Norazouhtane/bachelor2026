@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import category_encoders as ce
 from sklearn.model_selection import train_test_split
+#from scripts.variable_cleaner import clean_ess_data
 from variable_cleaner import clean_ess_data
 
 def load_data(
@@ -36,7 +37,7 @@ def load_data(
     df = clean_ess_data(df, codebook_path, nonresponse_dict)
 
     # Map vote values to 0 and 1
-    df['vote'] = df['vote'].map({1.0: 1, 2.0: 0})
+    df['vote'] = df['vote'].map({1: 1, 2: 0})
 
     # Prepare features
     exclude_from_predictors = ['vote', 'anweight', 'pspwght', 'pweight']  
@@ -93,7 +94,7 @@ social_cols = [
     'happy', 'sclmeet', 'sclact', 'dscrrce', 'dscrntn', 'dscrrlg', 'dscrlng', 
     'dscretn', 'dscrage', 'dscrgnd', 'dscrsex', 'dscrdsb', 'dscroth', 'dscrdk', 
     'dscrref', 'dscrnap', 'dscrna', 'inmdisc', 'lnghoma', 'lnghomb', 'fbrncnt',
-    'mbrncnt', 'polcmpl', 'poldcs', 'prtyban', 'scnsenv', 'wrkprty', 'wrkorg',
+    'mbrncnt', 'poldcs', 'prtyban', 'scnsenv', 'wrkprty', 'wrkorg',
     'rlgatnd', 'pray'
 ] #'health', 'hlthhmp', 'dscrgrp' kept
 
@@ -185,6 +186,13 @@ family_work_cols = [
     'ipjbwfm', 'wkhsch', 'fstjbyr', 'yrspdwk', 'flthmcc', 
     'fthcncr', 'ptmhmcc', 'pthcncr',
 ]
+
+# Region variables for other countries
+reg_cols = [
+    'regiontr', 'regionua', 'regiongb', 'regiondk', 'regionit',
+    'regionlu', 'regionno', 'regioncz', 'regioach', 'regionis',
+]
+
  
 # Administrative and metadata variables
 admin_cols = [
@@ -208,7 +216,7 @@ cols_to_drop = (party_voted_cols + party_close_cols + party_member_cols
                 + social_cols + health_cols + moral_cols + house_cols
                 + socio_demo_cols + education_cols + partner_education_cols
                 + father_education_cols + mother_education_cols + family_work_cols
-                + admin_cols + code_cols
+                + reg_cols + admin_cols + code_cols
                 )
 
 
