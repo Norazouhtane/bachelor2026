@@ -1,0 +1,36 @@
+{
+  "best_params": {
+    "learning_rate": 0.2,
+    "max_depth": 7,
+    "objective": "binary:hinge",
+    "scale_pos_weight": 0.19875035102499297,
+    "subsample": 0.9
+  },
+  "best_CV_score": 0.6646425776388891,
+  "search_parameters": {
+    "max_depth": [
+      4,
+      7,
+      10,
+      12
+    ],
+    "learning_rate": [
+      0.1,
+      0.15,
+      0.2,
+      0.25
+    ],
+    "subsample": [
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "objective": [
+      "binary:hinge"
+    ],
+    "scale_pos_weight": [
+      0.19875035102499297
+    ]
+  }
+}
