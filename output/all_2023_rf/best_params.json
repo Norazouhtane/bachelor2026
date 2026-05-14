@@ -1,0 +1,37 @@
+{
+  "best_params": {
+    "class_weight": "balanced",
+    "max_depth": 20,
+    "max_features": "sqrt",
+    "min_samples_leaf": 15,
+    "n_estimators": 500
+  },
+  "best_CV_score": 0.7044357055586126,
+  "search_parameters": {
+    "max_features": [
+      "sqrt",
+      "log2"
+    ],
+    "max_depth": [
+      15,
+      20,
+      25,
+      30
+    ],
+    "min_samples_leaf": [
+      10,
+      15,
+      20,
+      25
+    ],
+    "n_estimators": [
+      450,
+      500,
+      550,
+      600
+    ],
+    "class_weight": [
+      "balanced"
+    ]
+  }
+}
