@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import category_encoders as ce
 from sklearn.model_selection import train_test_split
+#from scripts.variable_cleaner import clean_ess_data
 from variable_cleaner import clean_ess_data
 
 def load_data(
@@ -83,8 +84,9 @@ religion_present_cols = [
     'rlgdnbat', 'rlgdncy', 'rlgdnafi', 'rlgdnagr', 'rlgdnhu', 'rlgdnais',
     'rlgdnie', 'rlgdnlv', 'rlgdnlt', 'rlgdme', 'rlgdnanl', 'rlgdnno',
     'rlgdnapl', 'rlgdnapt', 'rlgdnrs', 'rlgdnask', 'rlgdnase', 'rlgdnach',
-    'rlgdnaua', 'rlgdngb', 'rlgdnade', 'rlgatnd', 'pray'
+    'rlgdnaua', 'rlgdngb', 'rlgdnade', 'rlgatnd', 'pray', 'rlgdnacy', 'rlgdeacy' 
 ]
+
 
 # Religion past variables
 religion_past_cols = [
@@ -101,7 +103,7 @@ social_cols = [
     'dscroth', 'dscrdk', 'dscrref', 'dscrnap', 'dscrna', 'lnghom1', 'lnghom2', 
     'fbrncntc', 'mbrncntc', 'ccnthum', 'wrclmch', 'admrclc', 'atcherp', 'vteurmmb',
     'vteubcmb', 'atchctr', 'hmsacld', 'hmsfmlsh', 'loylead', 'lrnobed', 'ctrlife',
-    'actrolga', 'cptppola', 'psppipla', 'psppsgva', 'donprty', 'pstplonl',
+    'actrolga', 'psppipla', 'psppsgva', 'donprty', 'pstplonl',
     'volunfp',
 ] #'health', 'hlthhmp', 'dscrgrp', 'ccrdprs' kept
 
@@ -139,8 +141,9 @@ house_cols = [
     'gndr9', 'gndr10', 'gndr11', 'gndr12', 'yrbrn2', 'yrbrn3', 'yrbrn4', 'yrbrn5',
     'yrbrn6', 'yrbrn7', 'yrbrn8', 'yrbrn9', 'yrbrn10', 'yrbrn11', 'yrbrn12',
     'rshipa2', 'rshipa3', 'rshipa4', 'rshipa5', 'rshipa6', 'rshipa7', 'rshipa8',
-    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 'agegroup'
-] #'gndr', 'yrbrn', 'agea', kept
+    'rshipa9', 'rshipa10', 'rshipa11', 'rshipa12', 'agegroup', 'rshipa13',
+    'yrbrn13', 'rshipa15', 'gndr13' 
+] #'gndr', 'yrbrn', 'agea', kept 
 
 # Socio-demographic variables
 socio_demo_cols = [
