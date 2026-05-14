@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from sklearn.model_selection import GridSearchCV
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 def choose_model(model_name, random_state):
@@ -24,6 +24,18 @@ def choose_model(model_name, random_state):
         return xgb.XGBClassifier(random_state=random_state)
     elif model_name == "dummy":
         return DummyClassifier(strategy="stratified", random_state=random_state)
+    elif model_name == "all_2004_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.1, max_depth=25, min_data_in_leaf=100, n_jobs=1, num_leaves=90, random_state=random_state)
+    elif model_name == "all_2023_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.1, max_depth=20, min_data_in_leaf=80, n_jobs=1, num_leaves=50, random_state=random_state)    
+    elif model_name == "east_2004_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.05, max_depth=15, min_data_in_leaf=70, n_jobs=1, num_leaves=50, random_state=random_state)    
+    elif model_name == "east_2023_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.05, max_depth=15, min_data_in_leaf=80, n_jobs=1, num_leaves=40, random_state=random_state)    
+    elif model_name == "west_2004_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.05, max_depth=25, min_data_in_leaf=80, n_jobs=1, num_leaves=70, random_state=random_state)    
+    elif model_name == "west_2023_lgbm":
+        return lgb.LGBMClassifier(class_weight="balanced", learning_rate=0.15, max_depth=15, min_data_in_leaf=90, n_jobs=1, num_leaves=50, random_state=random_state)    
     
 
 def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, grid_search, random_state):
@@ -35,7 +47,7 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
     weights = df.loc[X_train.index, 'anweight']
 
     if grid_search:
-        parameters["xgb"]["scale_pos_weight"] = [sum(y_train == 0) / sum(y_train == 1)]
+        parameters["xgb"]["scale_pos_weight"] = [sum(y_train == 1) / sum(y_train == 0)]
         model = GridSearchCV(model, parameters[model_name], cv=5, scoring="f1_macro", n_jobs=-1)
         model.fit(X_train, y_train, sample_weight=weights)
         print(f"  Best params: {model.best_params_}")
@@ -64,10 +76,15 @@ def train_model(X_train, X_test, y_train, y_test, df, model_name, output_dir, gr
     fig, ax = plt.subplots(figsize=(5, 4))
     ConfusionMatrixDisplay.from_predictions(y_test, y_pred, display_labels=["No", "Yes"], ax=ax)
     fig.savefig(os.path.join(output_dir, "confusion_matrix.png"))
+    plt.close(fig)
 
     # Save model
     with open(os.path.join(output_dir, "model.pkl"), "wb") as f:
         pickle.dump(model, f)
+
+    # Save X_test
+    with open(os.path.join(output_dir, "X_test.pkl"), "wb") as f:
+        pickle.dump(X_test, f)
 
     return model
 
@@ -101,9 +118,10 @@ parameters = {
         #"n_estimators": [100, 150, 200],
     },
     "xgb": {
-        "max_depth": [2, 4, 7, 10, 12],
-        "learning_rate": [0.2, 0.25, 0.3, 0.35], #also called eta
-        "subsample": [0.7, 0.8, 0.9, 1.0],
+        "max_depth": [2, 4, 7, 10, 12, 15, 20, 25, 30],
+        "learning_rate": [0.01, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7], #also called eta
+        "subsample": [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
         "objective": ["binary:hinge"]
-    }
+    },
+        
 }
