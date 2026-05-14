@@ -1,0 +1,92 @@
+[
+    {
+        "predictor": "polintr",
+        "observed_diff": -0.08748528225383143,
+        "p_value": 0.527,
+        "significant": false
+    },
+    {
+        "predictor": "clsprty",
+        "observed_diff": -0.11838901631944654,
+        "p_value": 0.394,
+        "significant": false
+    },
+    {
+        "predictor": "lrscale",
+        "observed_diff": 0.12447212988979861,
+        "p_value": 0.02,
+        "significant": true
+    },
+    {
+        "predictor": "stfdem",
+        "observed_diff": -0.08124078227971629,
+        "p_value": 0.055,
+        "significant": false
+    },
+    {
+        "predictor": "trstprl",
+        "observed_diff": -0.0548263518968866,
+        "p_value": 0.321,
+        "significant": false
+    },
+    {
+        "predictor": "ppltrst",
+        "observed_diff": 0.006146916053143547,
+        "p_value": 0.729,
+        "significant": false
+    },
+    {
+        "predictor": "eisced",
+        "observed_diff": -0.005653190946481201,
+        "p_value": 0.956,
+        "significant": false
+    },
+    {
+        "predictor": "agea",
+        "observed_diff": 0.06216582059359674,
+        "p_value": 0.29,
+        "significant": false
+    },
+    {
+        "predictor": "hincfel",
+        "observed_diff": 0.015702873372973283,
+        "p_value": 0.241,
+        "significant": false
+    },
+    {
+        "predictor": "mbtru",
+        "observed_diff": -0.06542175272018844,
+        "p_value": 0.278,
+        "significant": false
+    },
+    {
+        "predictor": "gndr",
+        "observed_diff": 0.007408045894929978,
+        "p_value": 0.569,
+        "significant": false
+    },
+    {
+        "predictor": "nwsppol",
+        "observed_diff": -0.006272041048044769,
+        "p_value": 0.858,
+        "significant": false
+    },
+    {
+        "predictor": "mainact",
+        "observed_diff": 0.009105461451762444,
+        "p_value": 0.54,
+        "significant": false
+    },
+    {
+        "predictor": "health",
+        "observed_diff": 0.0010836400155528683,
+        "p_value": 0.968,
+        "significant": false
+    },
+    {
+        "predictor": "polcmpl",
+        "observed_diff": -0.003032543383104956,
+        "p_value": 0.924,
+        "significant": false
+    }
+]
