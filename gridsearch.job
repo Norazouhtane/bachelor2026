@@ -1,23 +1,16 @@
 #!/bin/bash
 #SBATCH --job-name=gridsearch       # Job name
 #SBATCH --output=gridsearch.%j.out      # Name of output file
-#SBATCH --cpus-per-task=16       # CPU cores
-#SBATCH --time=72:00:00
-#SBATCH --mem=8G       # Memory per node
-#SBATCH --partition=cores        # Run on cores queue 
+#SBATCH --cpus-per-task=16      # CPU cores
+#SBATCH --time=72:00:00     # Max run time (hh:mm:ss)
+#SBATCH --mem=8G        # Memory per node
+#SBATCH --partition=cores       # Run on cores queue 
 
 echo "Job started"
 echo "Running on node: $(hostname)"
 
 module load Python/3.11.3-GCCcore-12.3.0
-#python3 -m venv --clear "$HOME/venv_bachelor"
-source /home/nozo/bachelor2026/venv/bin/activate
-
-# Install dependencies
-#echo "Installing dependencies"
-#python3 -m pip install --upgrade pip
-#python3 -m pip install -r "$SLURM_SUBMIT_DIR/requirements.txt"
-#python3 -m pip install lightgbm
+source /$HOME/bachelor2026/venv/bin/activate
 
 # Run the script
 cd "$SLURM_SUBMIT_DIR/scripts"

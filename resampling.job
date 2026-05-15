@@ -1,22 +1,16 @@
 #!/bin/bash
 #SBATCH --job-name=resampling       # Job name
 #SBATCH --output=resampling.%j.out      # Name of output file
-#SBATCH --cpus-per-task=20       # CPU cores
+#SBATCH --cpus-per-task=20      # CPU cores
 #SBATCH --mem=16G       # Memory per node
 #SBATCH --time=72:00:00     # Max run time (hh:mm:ss)
-#SBATCH --partition=cores        # Run on scavenge queue 
+#SBATCH --partition=cores       # Run on scavenge queue 
 
 echo "Job started"
 echo "Running on node: $(hostname)"
 
 module load Python/3.11.3-GCCcore-12.3.0
-#python3 -m venv --clear "$HOME/venv"
-source /home/nozo/bachelor2026/venv/bin/activate
-
-# Install dependencies
-#echo "Installing dependencies"
-#python3 -m pip install --upgrade pip
-#python3 -m pip install -r "$SLURM_SUBMIT_DIR/requirements.txt"
+source /$HOME/bachelor2026/venv/bin/activate
 
 # Run the script
 cd "$SLURM_SUBMIT_DIR/scripts"
