@@ -1,6 +1,5 @@
-from bs4 import BeautifulSoup
-import pandas as pd
 import numpy as np
+from bs4 import BeautifulSoup
 
 def parse_ess_codebook(html_file):
     """
@@ -54,12 +53,12 @@ def clean_ess_data(df, codebook, nonresponse_dict=None):
     Replace all non-response codes with NaN.
     
     Parameters:
-        df : DataFrame with ESS data
-        codebook (string): Path to ESS codebook HTML file
+        df (DataFrame): DataFrame with ESS data.
+        codebook (string): Path to ESS codebook HTML file.
+        nonresponse_dict (dict): Parsed non-response codes if any. 
     
     Returns:
-        df_clean (DataFrame): Cleaned DataFrame without non-response values
-    UPDATE DOCSTRING
+        df_clean (DataFrame): Cleaned DataFrame with NaN instead of non-response values.
     """
     if nonresponse_dict is None:
         nonresponse_dict = parse_ess_codebook(codebook)

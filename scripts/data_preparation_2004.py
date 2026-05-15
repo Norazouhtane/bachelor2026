@@ -1,9 +1,9 @@
+# Import libraries
 import pandas as pd
 import numpy as np
 import category_encoders as ce
 from sklearn.model_selection import train_test_split
-#from scripts.variable_cleaner import clean_ess_data
-from variable_cleaner import clean_ess_data
+from .variable_cleaner import clean_ess_data
 
 def load_data(
         data_path,
@@ -14,7 +14,20 @@ def load_data(
         nonresponse_dict=None
 ):
     """
-    MAKE DOCSTRING
+    Load and prepare ESS 2004 data for modelling.
+
+    Parameters:
+        data_path (string): Path to ESS2 CSV file.
+        codebook_path (string): Path to ESS2 codebook HTML file.
+        country (list): List of country codes to include.
+        random_state (int): Random seed for train/test split.
+        test_size (float): Test set size. Default 0.3. 
+        nonresponse_dict (dict): Parsed non-response codes if any.
+    
+    Returns:
+        X_train, X_test (DataFrame): Train/test split of features
+        y_train, y_test (Series): Train/test split of target variable
+        df (DataFrame): Full clean and weighted dataframe 
     """
     # Read in data
     df = pd.read_csv(data_path)
@@ -96,7 +109,7 @@ social_cols = [
     'dscrref', 'dscrnap', 'dscrna', 'inmdisc', 'lnghoma', 'lnghomb', 'fbrncnt',
     'mbrncnt', 'poldcs', 'prtyban', 'scnsenv', 'wrkprty', 'wrkorg',
     'rlgatnd', 'pray'
-] #'health', 'hlthhmp', 'dscrgrp' kept
+]
 
 # Health variables
 health_cols = [
@@ -140,7 +153,7 @@ education_cols = [
     'edlvaes', 'edlvfr', 'edlvagb', 'edlvgr', 'edlvahu', 'edlvie',
     'edlvait', 'edlvlu', 'edlvnl', 'edlvno', 'edlvapl', 'edlvpt',
     'edlvse', 'edlvsk', 'edlvua', 'edufld', 'atncrse', 'wkdcpce'
-] #'edulvla', 'eisced' kept
+] 
 
 # Partner's education/employment variables
 partner_education_cols = [
@@ -148,7 +161,7 @@ partner_education_cols = [
     'cmsrvp', 'hswrkp', 'dngothp', 'dngdkp', 'dngnapp', 'dngrefp',
     'dngnap', 'crpdwkp', 'emprelp', 'wkhtotp', 'emplnop', 'jbspvp', 
     'njbspvp', 'wkdcorp', 'ioactp'
-] #'edulvlpa', 'mnactp' kept
+]
 
 # Father's education/employment variables
 father_education_cols = [
