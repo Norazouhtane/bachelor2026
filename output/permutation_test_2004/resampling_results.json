@@ -60,21 +60,9 @@
         "significant": false
     },
     {
-        "predictor": "gndr",
-        "observed_diff": 0.007408045894929978,
-        "p_value": 0.569,
-        "significant": false
-    },
-    {
         "predictor": "nwsppol",
         "observed_diff": -0.006272041048044769,
         "p_value": 0.858,
-        "significant": false
-    },
-    {
-        "predictor": "mainact",
-        "observed_diff": 0.009105461451762444,
-        "p_value": 0.54,
         "significant": false
     },
     {
@@ -82,11 +70,9 @@
         "observed_diff": 0.0010836400155528683,
         "p_value": 0.968,
         "significant": false
-    },
-    {
-        "predictor": "polcmpl",
-        "observed_diff": -0.003032543383104956,
-        "p_value": 0.924,
-        "significant": false
     }
 ]
+
+
+
+
