@@ -1,6 +1,5 @@
 import os
 import shap
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
@@ -33,6 +32,9 @@ def shap_values(model, X_test):
     Parameters:
         model: Fitted classifier.
         X_test (DataFrame): Test features.
+    
+    Return:
+        raw_shap (ndarray): SHAP values each sample and feature.
     """
     explainer = shap.Explainer(model)
     shap_values = explainer(X_test)

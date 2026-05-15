@@ -10,7 +10,7 @@ from .variable_cleaner import parse_ess_codebook
 
 # Configs
 year = 2004     # 2004, 2023
-repeat = 1000   # number of experiments ran
+repeat = 1000   # number of runs
 random_state = 42
 
 old_eu       = ["BE", "FR", "DE", "NL", "IE", "GR", "PT", "ES", "AT", "FI", "SE"]
