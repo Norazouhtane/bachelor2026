@@ -7,14 +7,14 @@ Tree-based machine learning models applied to European Social Survey (ESS) data 
 
 ## Data
 
-This project uses the **European Social Survey (ESS)**, a cross-national survey conducted across Europe. The data be found in the repository.
+This project uses the European Social Survey (ESS), a cross-national survey conducted across Europe. The data be found in the repository.
 
-| File | Round | Year | Description |
+| File | Round | Year | Location |
 |---|---|---|---|
-| `ESS2.csv` | Round 2 | 2004 | Place in `data/raw/` |
-| `ESS11.csv` | Round 11 | 2023 | Place in `data/raw/` |
-| `ESS2e03_6 codebook.html` | Round 2 | 2004 | Place in `codebooks/` |
-| `ESS11e04_1 codebook.html` | Round 11 | 2023 | Place in `codebooks` |
+| `ESS2.csv` | Round 2 | 2004 | `data/raw/` |
+| `ESS11.csv` | Round 11 | 2023 | `data/raw/` |
+| `ESS2e03_6 codebook.html` | Round 2 | 2004 | `codebooks/` |
+| `ESS11e04_1 codebook.html` | Round 11 | 2023 | `codebooks/` |
 
 
 ## File Overview
